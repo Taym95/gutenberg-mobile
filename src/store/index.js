@@ -41,13 +41,16 @@ const initialMoreBlockHtml = `
 <!-- /wp:more -->
 `;
 
-const initialParagraphBlockHtml = `<p><b>Hello</b> World!</p>`;
-const initialParagraphBlockHtml2 = `<!-- wp:paragraph --><b>Hello</b> World!<!-- wp:paragraph -->`;
+const initialParagraphBlockHtml = '<p><b>Hello</b> World!</p>';
+const initialParagraphBlockHtml2 = '<!-- wp:paragraph --><p><b>Hello</b> World!</p><!-- wp:paragraph -->';
 
 const codeBlockInstance = parse( initialCodeBlockHtml )[ 0 ];
 const moreBlockInstance = parse( initialMoreBlockHtml )[ 0 ];
 
 const paragraphBlockInstance2 = parse( initialParagraphBlockHtml2 )[ 0 ];
+console.log( 'this is not returning a block!?' );
+console.log( paragraphBlockInstance2 ); // ---> undefined?
+
 const paragraphBlockInstance = createBlock( 'core/paragraph', {
 	content: initialParagraphBlockHtml,
 } );
