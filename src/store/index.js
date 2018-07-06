@@ -5,7 +5,7 @@
 
 // Gutenberg imports
 import { registerCoreBlocks } from '@gutenberg/core-blocks';
-import { parse } from '@gutenberg/blocks';
+import { parse, createBlock } from '@gutenberg/blocks';
 
 import { createStore } from 'redux';
 import { reducer } from './reducers';
@@ -41,8 +41,16 @@ const initialMoreBlockHtml = `
 <!-- /wp:more -->
 `;
 
+const initialParagraphBlockHtml = `<p><b>Hello</b> World!</p>`;
+const initialParagraphBlockHtml2 = `<!-- wp:paragraph --><b>Hello</b> World!<!-- wp:paragraph -->`;
+
 const codeBlockInstance = parse( initialCodeBlockHtml )[ 0 ];
 const moreBlockInstance = parse( initialMoreBlockHtml )[ 0 ];
+
+const paragraphBlockInstance2 = parse( initialParagraphBlockHtml2 )[ 0 ];
+const paragraphBlockInstance = createBlock( 'core/paragraph', {
+	content: initialParagraphBlockHtml,
+} );
 
 const initialState: StateType = {
 	// TODO: get blocks list block state should be externalized (shared with Gutenberg at some point?).
@@ -50,7 +58,7 @@ const initialState: StateType = {
 	blocks: [
 		{
 			uid: '0',
-			name: 'aztec',
+			name: 'core/paragraph',
 			isValid: true,
 			attributes: {
 				content: 'This is text rendered <b>in Aztec!</b>',
@@ -68,9 +76,10 @@ const initialState: StateType = {
 			innerBlocks: [],
 			focused: false,
 		},
+		{ ...paragraphBlockInstance, focused: false },
 		{
 			uid: '2',
-			name: 'paragraph',
+			name: 'core/paragraph',
 			isValid: true,
 			attributes: {
 				content:
@@ -81,7 +90,7 @@ const initialState: StateType = {
 		},
 		{
 			uid: '3',
-			name: 'paragraph',
+			name: 'core/paragraph',
 			isValid: true,
 			attributes: {
 				content:
